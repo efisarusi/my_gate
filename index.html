@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <script>
-
 function postData() 
 {
   url = 'https://fcm.googleapis.com/fcm/send';
@@ -17,7 +16,6 @@ function postData()
     body: data
   });
 }
-
 </script>
   <head>
     <meta charset="UTF-8" />
@@ -43,10 +41,21 @@ function postData()
         "
         type="button"
         id="play-btn"
-        onclick="postData()"
+        onclick="changeColor()"
       >
         Play
       </button>
     </div>
   </body>
+  <script>
+    function changeColor() {
+      document.getElementById("play-btn").style.backgroundColor = "gray";
+      document.getElementById("play-btn").disabled = true;
+      postData()
+      setTimeout(() => {
+        document.getElementById("play-btn").style.backgroundColor = "red";
+        document.getElementById("play-btn").disabled = false;
+      }, 1500);
+    }
+  </script>
 </html>
