@@ -33,6 +33,12 @@ function postData()
     <title>Document</title>
   </head>
   <body>
+
+  <audio id="audioSource">
+    <source src="https://www.fesliyanstudios.com/soundeffects-download.php?id=3629" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
     <div
       style="
         height: 100vh;
@@ -57,14 +63,42 @@ function postData()
     </div>
   </body>
   <script>
+	function getRandomColor() {
+	  var letters = "0123456789ABCDEF";
+	  var color = "#";
+	  for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	  }
+	  return color;
+	}
+	function playAudio(id) {
+      var audio = document.getElementById("audioSource");
+      var source = document.getElementById("audioSource");
+      source.src = `https://www.fesliyanstudios.com/soundeffects-download.php?id=`+id;
+      audio.load();
+      audio.play();
+    }
+	
+  function getRandomIdInRange(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+	
     function changeColor() {
-      document.getElementById("play-btn").style.backgroundColor = "gray";
+		
+	   var randomId = getRandomIdInRange(3500, 3600);
+      playAudio(randomId);	
+		
+      document.getElementById("play-btn").style.backgroundColor = getRandomColor();
       document.getElementById("play-btn").disabled = true;
       postData()
       setTimeout(() => {
-        document.getElementById("play-btn").style.backgroundColor = "red";
+		document.getElementById("play-btn").style.backgroundColor = getRandomColor();
         document.getElementById("play-btn").disabled = false;
       }, 1500);
     }
+	window.onload = function () {
+      document.getElementById("play-btn").style.backgroundColor = getRandomColor();
+    };
+
   </script>
 </html>

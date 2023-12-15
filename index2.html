@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .circle {
+      width: 30vw;
+      height: 30vw;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30vw;
+      font-size: 10vw;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #circle1 {
+      background-color: red;
+      color: white;
+    }
+    #circle2 {
+      background-color: yellow;
+    }
+    #circle3 {
+      background-color: green;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="font-size: 10vw; text-align: center;">זמנית לא פועל</h1>
+  <p style="font-size: 10vw; text-align: center;">אתה יכול להתקשר ל:</p>
+  <div class="circle" id="circle1" onclick="openDialer('+972503448573')">חופית</div>
+  <div class="circle" id="circle2" onclick="openDialer('+972503839036')">אליס</div>
+  <div class="circle" id="circle3" onclick="openDialer('+972772150003')">סרוסי</div>
+
+  <script>
+    function openDialer(number) {
+      window.open('tel:' + number);
+    }
+  </script>
+</body>
+</html>

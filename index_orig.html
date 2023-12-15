@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function postData() 
+{
+	try 
+	{
+	 navigator.vibrate(200); // vibrate for 200ms
+	}
+	catch (error) 
+	{
+	  console.error(error);
+	}
+
+  url = 'https://fcm.googleapis.com/fcm/send';
+  data = '{"priority":"high","to":"ftbJ1JeZty4:APA91bFtTNwmn0BisdV_5Rm1zMWLsLCwg_gN5srKTuizax0KJoJZ3td19JYc9BU2NTCMsh5eULNKXrZrNWaA1rqVsnrt2YwGBOcxetF_3WZLSLlC0eDuX2M2xsKnMka5xuGO-xzbFSdx"}';
+  // Default options are marked with *
+  const response = fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':'key=AAAAPnj4wtw:APA91bEzcCVHeNxtykq1I-a3jjsp39HkVBn3rKEuZtqROEwpzs13WgP9QK3_7bby42TB3aQOqcJKIMEVi573CvUwtMaCMWzhrm1fMAwox-aw3_x31U9KWZmIOSvHm5Zzc_VLrh8NYKBD'
+    },
+    redirect: 'follow',
+    body: data
+  });
+}
+</script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      style="
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <button
+        style="
+          background-color: blue ;
+          padding: 100px;
+          border-radius: 50%;
+          cursor: pointer;
+        "
+        type="button"
+        id="play-btn"
+        onclick="changeColor()"
+      >
+        Open
+      </button>
+    </div>
+  </body>
+  <script>
+    function changeColor() {
+      document.getElementById("play-btn").style.backgroundColor = "gray";
+      document.getElementById("play-btn").disabled = true;
+      postData()
+      setTimeout(() => {
+        document.getElementById("play-btn").style.backgroundColor = "blue";
+        document.getElementById("play-btn").disabled = false;
+      }, 1500);
+    }
+  </script>
+</html>
