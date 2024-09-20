@@ -12,16 +12,33 @@ function postData()
 	  console.error(error);
 	}
 
-  url = 'https://62.0.30.39:22290/lll.html'
+
+  url1 = 'https://62.0.30.39:22290/lll.html'
   // Default options are marked with *
-  const response = fetch(url, {
+  const response = fetch(url1, {
 		method: 'POST',
 		headers: {
 			'Connection': 'close',  // Close connection after request
 			'Content-Type': 'application/x-www-form-urlencoded'  // Example content type for POST
 		},
 		body: 'data=some_value'  // Optional data to send with the request
-	});
+	}).catch(error => {
+  console.error('Error:', error);
+});
+
+
+
+  const url2 = 'https://efisarusi1.pythonanywhere.com/';
+fetch(url2, {method: 'GET'})
+.then(response => {
+  // You may not be able to read the response due to 'no-cors' mode
+  console.log('Request sent successfully');
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+
+
 }
 </script>
   <head>
