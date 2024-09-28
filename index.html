@@ -110,7 +110,7 @@ async function postWithTimeout(url, data, timeout = 5000) {
 	}
 	else
 	{
-	  statusFlag1=error.message;
+	  statusFlag1=String(error);
 	  updateButtonText();
 	}
   }
