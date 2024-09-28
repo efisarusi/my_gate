@@ -1,47 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    .circle {
-      width: 30vw;
-      height: 30vw;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 30vw;
-      font-size: 10vw;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #circle1 {
-      background-color: red;
-      color: white;
-    }
-    #circle2 {
-      background-color: yellow;
-    }
-    #circle3 {
-      background-color: green;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Downloader</title>
 </head>
 <body>
-  <h1 style="font-size: 10vw; text-align: center;">זמנית לא פועל</h1>
-  <p style="font-size: 10vw; text-align: center;">אתה יכול להתקשר ל:</p>
-  <div class="circle" id="circle1" onclick="openDialer('+972503448573')">חופית</div>
-  <div class="circle" id="circle2" onclick="openDialer('+972503839036')">אליס</div>
-  <div class="circle" id="circle3" onclick="openDialer('+972772150003')">סרוסי</div>
+    <h1>Image from HTTP Link</h1>
+    <img id="image" src="" alt="Downloaded Image" style="max-width: 100%; display: none;"/>
+    <button id="download-btn">Download Image</button>
 
-  <script>
-    function openDialer(number) {
-      window.open('tel:' + number);
-    }
-  </script>
+    <script>
+        // URL of the image from the HTTP link
+        const imageUrl = 'http://62.0.30.39:22290/image.jpg'; // Replace with your HTTP image URL
+
+        // Function to download and display the image
+        async function downloadImage() {
+            try {
+                const response = await fetch(imageUrl, { method: 'GET' });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const blob = await response.blob();
+                const imgElement = document.getElementById('image');
+                imgElement.src = URL.createObjectURL(blob);
+                imgElement.style.display = 'block'; // Show the image after download
+
+                // Optional: Create a link to download the image
+                const link = document.createElement('a');
+                link.href = imgElement.src;
+                link.download = 'downloaded_image.jpg'; // Specify the name for the downloaded file
+                link.textContent = 'Click here to download the image';
+                document.body.appendChild(link);
+
+            } catch (error) {
+                console.error('Error downloading image:', error);
+            }
+        }
+
+        // Add event listener to the button
+        document.getElementById('download-btn').addEventListener('click', downloadImage);
+    </script>
 </body>
 </html>
