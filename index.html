@@ -1,6 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <script>
+
+let statusFlag1 = "!"; // Global variable to store the status
+let statusFlag2 = "?"; // Global variable to store the status
+
+function updateButtonText() 
+{
+  const btn = document.getElementById('play-btn');
+  btn.innerHTML = 'SARUSI<br>' + statusFlag1 + statusFlag2;
+}
+
+async function fetchData2() 
+{
+	//statusFlag2 = "b"
+	//updateButtonText();
+	fetch('https://efisarusi1.pythonanywhere.com/')
+    .then(response => response.text()) // You can use response.json() if the response is JSON
+    .then(data => {
+        //console.log(data);
+        // Check if the specific string is present in the response
+        if (data.includes("Successfully sent message")) 
+		{
+            console.log("Message sent passed!");
+			statusFlag2 = "B"
+			updateButtonText();
+        }
+		else
+		{
+            console.log("Message sent failed!");
+			statusFlag2 = "b"
+			updateButtonText();
+		}
+    })
+    .catch(error => 
+	{
+		console.error('Error:X', error);	
+		statusFlag2 = "b"
+		updateButtonText();
+	})
+
+
+}
+		
+function post2()
+{
+	console.error("post2");
+	fetchData2();
+}
+
+function post1()
+{
+  console.error("post1");
+  const url = 'http://62.0.30.39:22290';
+  const data = { data: 'some_value' }; // Data to send
+  const timeout = 5000; // 5 seconds timeout
+
+  console.error('Sending POST request...');
+  postWithTimeout(url, data, timeout);
+}
+
+// Function to send POST request with timeout
+async function postWithTimeout(url, data, timeout = 5000) {
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  // Set a timeout to abort the request
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+	const response = await fetch(url, {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+	  },
+	  body: new URLSearchParams(data),
+	  signal // Pass the signal to the fetch request
+	});
+
+	clearTimeout(timeoutId); // Clear the timeout if the request completes
+
+	if (response.ok) 
+	{
+	  const responseText = await response.text();
+	  console.error('Success: ' + responseText);
+	  if(responseText.includes("HEllo"))
+	  {
+		statusFlag1="A";
+	  }
+	  else
+	  {
+		statusFlag1="q";
+	  }
+	} 
+	else 
+	{
+		statusFlag1="y";
+	}
+    updateButtonText();
+  } 
+  catch (error) 
+  {
+  	console.error('ErrorX=:' + error);
+	if (error.name === 'AbortError') 
+	{
+	  console.error('Error: Request timed out');
+	  statusFlag1="a";
+	  updateButtonText();
+	}
+	else
+	{
+	  statusFlag1="c";
+	  updateButtonText();
+	}
+  }
+}
+
+
+
 function postData() 
 {
 	try 
@@ -13,31 +130,8 @@ function postData()
 	}
 
 
-  url1 = 'https://62.0.30.39:22290/lll.html'
-  // Default options are marked with *
-  const response = fetch(url1, {
-		method: 'POST',
-		headers: {
-			'Connection': 'close',  // Close connection after request
-			'Content-Type': 'application/x-www-form-urlencoded'  // Example content type for POST
-		},
-		body: 'data=some_value'  // Optional data to send with the request
-	}).catch(error => {
-  console.error('Error:', error);
-});
-
-
-
-  const url2 = 'https://efisarusi1.pythonanywhere.com/';
-fetch(url2, {method: 'GET'})
-.then(response => {
-  // You may not be able to read the response due to 'no-cors' mode
-  console.log('Request sent successfully');
-})
-.catch(error => {
-  console.error('Error:', error);
-});
-
+	post1();
+	post2();		
 
 }
 </script>
